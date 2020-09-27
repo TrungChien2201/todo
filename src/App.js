@@ -6,9 +6,9 @@ import Homepage from './Views/Homepage';
 import '../src/style.scss'
 function App() {
   return (
-   <Router>
+  
      <Homepage />
-   </Router>
+   
   );
 }
 
