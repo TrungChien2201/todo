@@ -44,26 +44,26 @@ export default function Homepage() {
     }
     const removeDetail = (listDetail,itemId) => {
         // console.log(itemId);
-        // const noteList = itemdetail.map(el=> el.note)
-        // console.log(noteList);
-        // const filterDetail = noteList[0].filter(ln => ln.id !== listDetail.id);
+        const lists = [...list]
+        const noteList = itemdetail.map(el=> el.note)
+      
+        const filterDetail = noteList[0].filter(ln => ln.id !== listDetail.id);
         // console.log(filterDetail);
-       
-        const newList = list.map(nl => {
-            const filterDetail = nl.note.filter(ln => ln.id !== listDetail.id);
+        
+        const newList = lists.map(nl => {
+            
            if(nl.id === itemId){
                console.log('k');
                return {...nl, note: filterDetail}
            }
-            
+            return nl;
         })
         console.log(newList);
-        setItemDetail(newList)
-     
+        
+        setList(newList)
+       
     }
-    useEffect(()=>{
-     console.log(list);
-    },[])
+   
     console.log(list);
     const handleAddItem = (e) => {
         console.log(e);

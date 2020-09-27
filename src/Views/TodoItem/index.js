@@ -8,9 +8,9 @@ export default function ItemDetail(props) {
     const [additem, setAdditem] = useState('');
     const [listdetail,setListdetail] = useState([props.itemdetail])
 
-    // useEffect(() => {
-    //     setListdetail(listdetail)
-    // }, [itemdetail])
+    useEffect(() => {
+        setListdetail(listdetail)
+    }, [props.itemdetail])
     console.log(props.itemdetail);
     console.log(listdetail);
     
@@ -23,23 +23,23 @@ export default function ItemDetail(props) {
          console.log(listdetail);
     }
 
-    // const handleAddItemchild = (valuechild, arrchild) => {
-    //     console.log(arrchild);
-    //     if (valuechild) {
-    //         console.log(arrchild);
-    //         arrchild.push({id: uuidv4(),valuechilds: valuechild})
-    //     }
-    // }
-    // const handleClose = (listnotess) => {
-    //     console.log(listnotess);
-    //     deletedetail(listnotess,listnote)
+    const handleAddItemchild = (valuechild, arrchild) => {
+        console.log(arrchild);
+        if (valuechild) {
+            console.log(arrchild);
+            arrchild.push({id: uuidv4(),valuechilds: valuechild})
+        }
+    }
+    const handleClose = (listnotess) => {
+        // console.log(listnotess);
+        // deletedetail(listnotess,listnote)
        
        
-    // }
+    }
   
     return (
         <div>
-            {/* {listdetail ? listdetail.map((item, index) => (
+            {listdetail ? listdetail.map((item, index) => (
                 <div key={index}>
                     <h3 className="note-title">Note (<span>{item.title}</span>)</h3>
                     <div className="d-flex mt-3">
@@ -70,7 +70,7 @@ export default function ItemDetail(props) {
 
                     </div>
                 </div>
-            )) : "f"} */}
+            )) : "f"}
         </div>
     )
 }
