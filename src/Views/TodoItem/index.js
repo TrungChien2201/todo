@@ -4,28 +4,23 @@ import { useLocation } from 'react-router-dom';
 import TodoChildItem from './TodoChildItem';
 import '../TodoItem/style.scss';
 import { v4 as uuidv4 } from 'uuid';
-export default function ItemDetail({ list , deletedetail}) {
+export default function ItemDetail(props) {
     const [additem, setAdditem] = useState('');
-
-    let query = new URLSearchParams(useLocation().search);
-    const id = query.get("id");
-    const [listdetail,setListdetail] = useState(list)
+    const [listdetail,setListdetail] = useState([props.itemdetail])
 
     useEffect(() => {
         setListdetail(listdetail)
-    }, [list])
-    const lists = listdetail.filter(item => item.id === id);
-    const listnote = lists.map(item => item.note);
-    console.log(listnote);
-    const l = [...listnote];
+    }, [props.itemdetail])
+    console.log(props.itemdetail);
+    console.log(listdetail);
     
     const handleAdd = (e) => {
         e.preventDefault();
         if (additem) {
-            l[0].push({id:uuidv4(), titleitem: additem, arraylist: [] });
+            listdetail[0].push({id:uuidv4(), titleitem: additem, arraylist: [] });
             setAdditem('')
         }
-         console.log(lists);
+         console.log(listdetail);
     }
 
     const handleAddItemchild = (valuechild, arrchild) => {
@@ -36,15 +31,15 @@ export default function ItemDetail({ list , deletedetail}) {
         }
     }
     const handleClose = (listnotess) => {
-        console.log(listnotess);
-        deletedetail(listnotess,listnote)
+        // console.log(listnotess);
+        // deletedetail(listnotess,listnote)
        
        
     }
   
     return (
         <div>
-            {lists ? lists.map((item, index) => (
+            {listdetail ? listdetail.map((item, index) => (
                 <div key={index}>
                     <h3 className="note-title">Note (<span>{item.title}</span>)</h3>
                     <div className="d-flex mt-3">
@@ -75,7 +70,7 @@ export default function ItemDetail({ list , deletedetail}) {
 
                     </div>
                 </div>
-            )) : ""}
+            )) : "f"}
         </div>
     )
 }
