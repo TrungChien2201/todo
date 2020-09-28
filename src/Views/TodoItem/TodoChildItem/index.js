@@ -32,20 +32,20 @@ export default function TodoChildItem({ listnote }) {
     const CloseFormaddChild = () => {
         setIsForm(false)
     }
-    const removeChildDetail = (ids,noteId) => {
+    const removeChildDetail = (ids, noteId) => {
         const listchild = listnotes.map(el => el.arraylist);
         const filterchild = listchild[0].filter(el => el.id !== ids);
-            const newlistchild = listnotes.map(el => {
-                if (el.id === noteId) {
-                    console.log('hi');
-                    return {...el , arraylist: filterchild}
-                }
-                return el;
-            })
-            console.log(newlistchild);
-            setListnotes(newlistchild)
-           
-      
+        const newlistchild = listnotes.map(el => {
+            if (el.id === noteId) {
+                console.log('hi');
+                return { ...el, arraylist: filterchild }
+            }
+            return el;
+        })
+        console.log(newlistchild);
+        setListnotes(newlistchild)
+
+
     }
     console.log(listnotes);
     return (
@@ -59,9 +59,9 @@ export default function TodoChildItem({ listnote }) {
                             <div className="w-50 item-detail">
                                 {itemnotechild.titlechild}
                             </div>
-                            <a type="button" onClick={()=>removeChildDetail(itemnotechild.id, itemnote.id)} className="ml-3 pt-4"><i className="fas fa-times-circle"></i></a>
+                            <a type="button" onClick={() => removeChildDetail(itemnotechild.id, itemnote.id)} className="ml-3 pt-4"><i className="fas fa-times-circle"></i></a>
                         </div>
-                    )):''}
+                    )) : ''}
 
                     <a type="button" className="icon-add" onClick={OpenFormaddChild}><i className="fas fa-plus-circle"></i></a>
                     {isForm === true ?
