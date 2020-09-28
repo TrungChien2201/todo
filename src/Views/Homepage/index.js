@@ -41,9 +41,18 @@ export default function Homepage() {
     const deletedetail = (listss,arrayList) => {
         console.log(arrayList[0]);
         console.log(listss);
-      arrayList[0].filter(i => i.id != listss.id)
-      
-      
+     const newarrayList = arrayList[0].filter(i => i.id != listss.id);
+     console.log(newarrayList);
+      const newSetlist = list.map(el=> {
+          
+          return {
+              ...el,
+              note: newarrayList
+          }}
+         
+      )
+      console.log(newSetlist);
+      setList(newSetlist)
     }
     console.log(list);
     return (
