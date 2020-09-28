@@ -18,10 +18,15 @@ export default function Homepage() {
         e.preventDefault();
         if (keysearch) {
             var lists = list.filter(item => item.title === keysearch);
-            setKeysearch('');
-            if (lists != '') {
+            
+            if (lists !== '') {
                 setList(lists)
+                setKeysearch('')
             }
+        }
+        else {
+            setList(JSON.parse(sessionStorage.getItem('list')))
+            console.log(sessionStorage.getItem('list'));
         }
     }
 
@@ -29,7 +34,8 @@ export default function Homepage() {
         e.preventDefault();
         if (additem)
             list.push({ id: uuidv4(), title: additem, note: [] });
-        setAdditem('')
+        setAdditem('');
+        sessionStorage.setItem('list',JSON.stringify(list));
     }
     const handleClose = (ids) => {
         const newlist = list.filter(i => i.id !== ids)
@@ -38,6 +44,7 @@ export default function Homepage() {
     }
     const gotoDetail = (itemDetail) => {
         setItemDetail([itemDetail])
+        localStorage.setItem('id',itemDetail.id)
     }
     const removeDetail = (listDetail, itemId) => {
         console.log(itemId);
@@ -74,9 +81,30 @@ export default function Homepage() {
         }
     }
     
-     const handleAddItemchilds = (e) => {
-        
-     }
+    //  const handleRemoveChildetail = (listFilter,ids) => {
+    //     console.log(listFilter);
+    //     console.log(ids);
+    //     const newnote = itemdetail.map(el => el.note);
+    //     const idNote = localStorage.getItem('id');
+    //     console.log(idNote);
+    //     const newDetail = newnote.map(el => {
+    //         if(el[0].id === ids){
+    //             return {...el[0], arraylist: listFilter}
+    //         }
+    //         return el[0];
+            
+    //     })
+    //     const newNote = itemdetail.map(el => {
+    //         if(el.id === idNote){
+    //             return {
+    //                 ...el, note: newDetail
+    //             }
+    //         }
+    //         return el;
+    //     })
+    //     console.log(newDetail);
+    //     setItemDetail(newNote)
+    //  }
      const OpenFormaddChild = (lc,itemId) => {
        
      }
@@ -155,7 +183,7 @@ export default function Homepage() {
                                         {/* {itemdetail ? itemdetail.map((itemchild, indexchild) => (
                                             <div className="item-detail w-50" key={indexchild}>{itemchild.valuechilds}</div>
                                         )) : ''} */}
-                                        <TodoChildItem listnote = {itemdetail}/>
+                                        <TodoChildItem listnote = {itemdetail} />
                                     </div>
                                 )) : ''}
 

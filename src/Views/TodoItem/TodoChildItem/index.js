@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Col, Form, FormControl } from 'react-bootstrap';
 import '../TodoChildItem/style.scss';
 import { v4 as uuidv4 } from 'uuid';
-export default function TodoChildItem({ listnote }) {
+export default function TodoChildItem({ listnote ,handleRemoveChildetail}) {
     const [additemchild, setAdditemchild] = useState('');
     const [listnotes, setListnotes] = useState([listnote])
     const [isForm, setIsForm] = useState(false);
@@ -22,7 +22,7 @@ export default function TodoChildItem({ listnote }) {
                 return el;
             })
             console.log(newlistchild);
-            setListnotes(newlistchild)
+            setListnotes(newlistchild);
         }
 
     }
@@ -44,7 +44,7 @@ export default function TodoChildItem({ listnote }) {
         })
         console.log(newlistchild);
         setListnotes(newlistchild)
-
+    //    handleRemoveChildetail(filterchild,noteId)
 
     }
     console.log(listnotes);
@@ -59,7 +59,7 @@ export default function TodoChildItem({ listnote }) {
                             <div className="w-50 item-detail">
                                 {itemnotechild.titlechild}
                             </div>
-                            <a type="button" onClick={() => removeChildDetail(itemnotechild.id, itemnote.id)} className="ml-3 pt-4"><i className="fas fa-times-circle"></i></a>
+                            <a href="#" type="button" onClick={() => removeChildDetail(itemnotechild.id, itemnote.id)} className="ml-3 pt-4"><i className="fas fa-times-circle"></i></a>
                         </div>
                     )) : ''}
 
@@ -74,7 +74,7 @@ export default function TodoChildItem({ listnote }) {
 
                             <Button className="ml-3" onClick={() => handleAddItemchilds(itemnote.id)} type="button">Add Item</Button>
 
-                            <a type="button" onClick={CloseFormaddChild} className="ml-3 pt-2"><i className="fas fa-times-circle"></i></a>
+                            <a href="#" type="button" onClick={CloseFormaddChild} className="ml-3 pt-2"><i className="fas fa-times-circle"></i></a>
                         </Form>) : ("")}
                 </div>
             )) : ''}
