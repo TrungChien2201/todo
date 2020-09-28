@@ -5,30 +5,27 @@ import '../Homepage/style.scss';
 import { v4 as uuidv4 } from 'uuid';
 import Switch from 'react-bootstrap/esm/Switch';
 import ItemDetail from '../TodoItem';
+import TodoChildItem from '../TodoItem/TodoChildItem';
 export default function Homepage() {
     const [list, setList] = useState([]);
     const [keysearch, setKeysearch] = useState('');
     const [additem, setAdditem] = useState('');
+    const [additemdetail, setAdditemDetail] = useState('');
     const [additemchild, setAdditemchild] = useState('');
     const [itemdetail, setItemDetail] = useState();
-
+    const [isForm, setIsForm] = useState();
     const handleSearch = (e) => {
         e.preventDefault();
         if (keysearch) {
             var lists = list.filter(item => item.title === keysearch);
             setKeysearch('');
-            console.log(lists);
             if (lists != '') {
                 setList(lists)
             }
-
         }
-
-
     }
 
     const handleAdd = (e) => {
-
         e.preventDefault();
         if (additem)
             list.push({ id: uuidv4(), title: additem, note: [] });
@@ -36,61 +33,56 @@ export default function Homepage() {
     }
     const handleClose = (ids) => {
         const newlist = list.filter(i => i.id !== ids)
-        setList(newlist)
-
+        setList(newlist);
+        setItemDetail('')
     }
-<<<<<<< HEAD
-    const deletedetail = (listss,arrayList) => {
-        console.log(arrayList[0]);
-        console.log(listss);
-     const newarrayList = arrayList[0].filter(i => i.id != listss.id);
-     console.log(newarrayList);
-      const newSetlist = list.map(el=> {
-          
-          return {
-              ...el,
-              note: newarrayList
-          }}
-         
-      )
-      console.log(newSetlist);
-      setList(newSetlist)
-=======
     const gotoDetail = (itemDetail) => {
         setItemDetail([itemDetail])
     }
-    const removeDetail = (listDetail,itemId) => {
-        // console.log(itemId);
+    const removeDetail = (listDetail, itemId) => {
+        console.log(itemId);
         const lists = [...list]
-        const noteList = itemdetail.map(el=> el.note)
-      
+        const noteList = itemdetail.map(el => el.note)
+
         const filterDetail = noteList[0].filter(ln => ln.id !== listDetail.id);
-        // console.log(filterDetail);
-        
+        console.log(filterDetail);
+
         const newList = lists.map(nl => {
-            
-           if(nl.id === itemId){
-               console.log('k');
-               return {...nl, note: filterDetail}
-           }
+
+            if (nl.id === itemId) {
+                return { ...nl, note: filterDetail }
+            }
             return nl;
         })
-        console.log(newList);
-        
+
+        const newDetail = itemdetail.map(el => {
+            if (el.id === itemId) {
+                console.log(el);
+                return { ...el, note: filterDetail }
+            }
+            return el;
+        })
+        setItemDetail(newDetail);
         setList(newList)
-       
->>>>>>> c1cebc7a2db9f5f5c4c8fc0168a570fd78428bf0
+
     }
-   
-    console.log(list);
+
     const handleAddItem = (e) => {
-        console.log(e);
-        if (additemchild) {
-            e.push({id:uuidv4(), titleitem: additemchild, arraylist: [] });
-            setAdditemchild('')
+        if (additemdetail) {
+            e.push({ id: uuidv4(), titleitem: additemdetail, arraylist: [] });
+            setAdditemDetail('')
         }
-         console.log(itemdetail);
     }
+    
+     const handleAddItemchilds = (e) => {
+        
+     }
+     const OpenFormaddChild = (lc,itemId) => {
+       
+     }
+     const removeChildDetail = (lc) => {
+         
+     }
     return (
         <div className="homepage">
 
@@ -143,26 +135,29 @@ export default function Homepage() {
                                 <Form className="d-flex w-100 justify-content-between">
                                     <Col sm="10" className="p-0">
                                         <FormControl
-                                            placeholder="add item" value={additemchild} onChange={e => setAdditemchild(e.target.value)}
+                                            placeholder="add item" value={additemdetail} onChange={e => setAdditemDetail(e.target.value)}
                                         />
                                     </Col>
 
-                                    <Button className="" onClick={()=>handleAddItem(items.note)} type="button">Add Item</Button>
+                                    <Button className="" onClick={() => handleAddItem(items.note)} type="button">Add Item</Button>
 
                                 </Form>
                             </div>
                             <div className="w-100">
-                                {items.note?items.note.map((itemdetail, indexdetail) => (
+                                {items.note ? items.note.map((itemdetail, indexdetail) => (
                                     <div key={indexdetail} className="div-item-detail">
                                         <div className="d-flex">
                                             <div className="w-50 item-detail">
                                                 {itemdetail.titleitem}
                                             </div>
-                                            <a type="button" onClick={()=> removeDetail(itemdetail,items.id)} className="ml-3 pt-4"><i className="fas fa-times-circle"></i></a>
+                                            <a type="button" onClick={() => removeDetail(itemdetail, items.id)} className="ml-3 pt-4"><i className="fas fa-times-circle"></i></a>
                                         </div>
-                                        {/* <TodoChildItem handleAddItemchild={handleAddItemchild} arrayitemchild={item.arraylist} /> */}
+                                        {/* {itemdetail ? itemdetail.map((itemchild, indexchild) => (
+                                            <div className="item-detail w-50" key={indexchild}>{itemchild.valuechilds}</div>
+                                        )) : ''} */}
+                                        <TodoChildItem listnote = {itemdetail}/>
                                     </div>
-                                )):''}
+                                )) : ''}
 
                             </div>
                         </div>
