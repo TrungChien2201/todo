@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Col, Form, FormControl, Navbar } from 'react-bootstrap';
-import { Link, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Button, Col, Form, FormControl } from 'react-bootstrap';
 import '../Homepage/style.scss';
 import { v4 as uuidv4 } from 'uuid';
-import Switch from 'react-bootstrap/esm/Switch';
-import ItemDetail from '../TodoItem';
 import TodoChildItem from '../TodoItem/TodoChildItem';
 export default function Homepage() {
     const [list, setList] = useState([]);
     const [keysearch, setKeysearch] = useState('');
     const [additem, setAdditem] = useState('');
     const [additemdetail, setAdditemDetail] = useState('');
-    const [additemchild, setAdditemchild] = useState('');
     const [itemdetail, setItemDetail] = useState();
-    const [isForm, setIsForm] = useState();
     const handleSearch = (e) => {
         e.preventDefault();
         if (keysearch) {
             var lists = list.filter(item => item.title === keysearch);
-            
             if (lists !== '') {
                 setList(lists)
                 setKeysearch('')
@@ -26,16 +20,17 @@ export default function Homepage() {
         }
         else {
             setList(JSON.parse(sessionStorage.getItem('list')))
-            console.log(sessionStorage.getItem('list'));
         }
     }
 
     const handleAdd = (e) => {
         e.preventDefault();
-        if (additem)
+        if (additem) {
             list.push({ id: uuidv4(), title: additem, note: [] });
-        setAdditem('');
-        sessionStorage.setItem('list',JSON.stringify(list));
+            setAdditem('');
+            sessionStorage.setItem('list', JSON.stringify(list));
+        }
+
     }
     const handleClose = (ids) => {
         const newlist = list.filter(i => i.id !== ids)
@@ -44,10 +39,9 @@ export default function Homepage() {
     }
     const gotoDetail = (itemDetail) => {
         setItemDetail([itemDetail])
-        localStorage.setItem('id',itemDetail.id)
+        localStorage.setItem('id', itemDetail.id)
     }
     const removeDetail = (listDetail, itemId) => {
-        console.log(itemId);
         const lists = [...list]
         const noteList = itemdetail.map(el => el.note)
 
@@ -64,7 +58,6 @@ export default function Homepage() {
 
         const newDetail = itemdetail.map(el => {
             if (el.id === itemId) {
-                console.log(el);
                 return { ...el, note: filterDetail }
             }
             return el;
@@ -80,7 +73,7 @@ export default function Homepage() {
             setAdditemDetail('')
         }
     }
-    
+
     //  const handleRemoveChildetail = (listFilter,ids) => {
     //     console.log(listFilter);
     //     console.log(ids);
@@ -92,7 +85,7 @@ export default function Homepage() {
     //             return {...el[0], arraylist: listFilter}
     //         }
     //         return el[0];
-            
+
     //     })
     //     const newNote = itemdetail.map(el => {
     //         if(el.id === idNote){
@@ -105,12 +98,6 @@ export default function Homepage() {
     //     console.log(newDetail);
     //     setItemDetail(newNote)
     //  }
-     const OpenFormaddChild = (lc,itemId) => {
-       
-     }
-     const removeChildDetail = (lc) => {
-         
-     }
     return (
         <div className="homepage">
 
@@ -146,9 +133,9 @@ export default function Homepage() {
                         {list ? list.map((item, index) => (
                             <div key={index} className="d-flex w-100">
 
-                                <a className="notelink" type="button" onClick={() => gotoDetail(item)}>{item.title}</a>
+                                <Button className="notelink" type="button" onClick={() => gotoDetail(item)}>{item.title}</Button>
 
-                                <a type="button" onClick={() => handleClose(item.id)} className="ml-3 pt-3"><i className="fas fa-times-circle"></i></a>
+                                <button type="button" onClick={() => handleClose(item.id)} className="ml-3 pt-3 btn-close"><i className="fas fa-times-circle"></i></button>
                             </div>
 
                         )) : ""}
@@ -178,12 +165,12 @@ export default function Homepage() {
                                             <div className="w-50 item-detail">
                                                 {itemdetail.titleitem}
                                             </div>
-                                            <a type="button" onClick={() => removeDetail(itemdetail, items.id)} className="ml-3 pt-4"><i className="fas fa-times-circle"></i></a>
+                                            <button type="button" onClick={() => removeDetail(itemdetail, items.id)} className="ml-3 pt-4 btn-close"><i className="fas fa-times-circle"></i></button>
                                         </div>
                                         {/* {itemdetail ? itemdetail.map((itemchild, indexchild) => (
                                             <div className="item-detail w-50" key={indexchild}>{itemchild.valuechilds}</div>
                                         )) : ''} */}
-                                        <TodoChildItem listnote = {itemdetail} />
+                                        <TodoChildItem listnote={itemdetail} />
                                     </div>
                                 )) : ''}
 
