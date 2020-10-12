@@ -1,40 +1,66 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, FormControl } from 'react-bootstrap';
 import '../Homepage/style.scss';
 import { v4 as uuidv4 } from 'uuid';
 import TodoChildItem from '../TodoItem/TodoChildItem';
+import Fuse from 'fuse.js'
 export default function Homepage() {
-    const [list, setList] = useState([]);
+    const [list, setList] = useState();
+    const [listSearch, setListSearch] = useState([]);
     const [keysearch, setKeysearch] = useState('');
     const [additem, setAdditem] = useState('');
     const [additemdetail, setAdditemDetail] = useState('');
     const [itemdetail, setItemDetail] = useState();
+    const [isSearch,setIsSearch] = useState('')
+
+    const handleChange= (e) => {
+        setKeysearch(e)
+       if(e === ''){
+        setList(listSearch)
+        setIsSearch('')
+       }
+    }
     const handleSearch = (e) => {
         e.preventDefault();
-        if (keysearch) {
-            var lists = list.filter(item => item.title === keysearch);
-            if (lists !== '') {
-                setList(lists)
-                setKeysearch('')
+        setIsSearch(true)
+        console.log(listSearch);
+    
+        if (keysearch !== '' && listSearch!='') {
+            console.log(keysearch);
+            setIsSearch(true)
+            const options = {
+                includeScore: true,
+                // equivalent to `keys: [['author', 'tags', 'value']]`
+                keys: ['title']
             }
+            const fuse = new Fuse(listSearch, options)
+            const result = fuse.search(keysearch);
+            const listResult = [];
+            listResult.push(result.map(el => el.item));
+            setList(listResult[0]);
         }
         else {
-            setList(JSON.parse(sessionStorage.getItem('list')))
+            setList(listSearch);
+            setIsSearch('')
         }
     }
 
     const handleAdd = (e) => {
         e.preventDefault();
         if (additem) {
-            list.push({ id: uuidv4(), title: additem, note: [] });
+           listSearch.push({ id: uuidv4(), title: additem, note: [] });
+          
+            setList(listSearch)
             setAdditem('');
-            sessionStorage.setItem('list', JSON.stringify(list));
+            
         }
 
     }
     const handleClose = (ids) => {
         const newlist = list.filter(i => i.id !== ids)
         setList(newlist);
+        setListSearch(listSearch.filter(i => i.id !== ids))
+        
         setItemDetail('')
     }
     const gotoDetail = (itemDetail) => {
@@ -108,7 +134,7 @@ export default function Homepage() {
                         <Form onSubmit={handleSearch} className="d-flex justify-content-between">
                             <Col sm="9" className="p-0">
                                 <FormControl
-                                    placeholder="key search" value={keysearch} onChange={e => setKeysearch(e.target.value)}
+                                    placeholder="key search" value={keysearch} onChange={e => handleChange(e.target.value)}
                                 />
                             </Col>
 
@@ -118,14 +144,14 @@ export default function Homepage() {
                     </div>
 
                     <h3 className="mt-3 mb-3 note-title">All Note</h3>
-                    <Form onSubmit={handleAdd} className="d-flex justify-content-between w-100">
+                    <Form className="d-flex justify-content-between w-100">
                         <Col sm="9" className="p-0">
                             <FormControl
                                 placeholder="add item" value={additem} onChange={e => setAdditem(e.target.value)}
                             />
                         </Col>
 
-                        <Button className="ml-3" type="submit">Add Item</Button>
+                        {isSearch?<Button className="ml-3 "  type="button" disabled>Add Item</Button>:<Button className="ml-3 "  type="button" onClick={handleAdd}>Add Item</Button>}
 
                     </Form>
 
