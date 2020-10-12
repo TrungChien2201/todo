@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Form, FormControl } from 'react-bootstrap';
 import '../Homepage/style.scss';
 import { v4 as uuidv4 } from 'uuid';
@@ -25,7 +25,7 @@ export default function Homepage() {
         setIsSearch(true)
         console.log(listSearch);
     
-        if (keysearch !== '' && listSearch!='') {
+        if (keysearch !== '' && listSearch!=='') {
             console.log(keysearch);
             setIsSearch(true)
             const options = {
@@ -70,10 +70,12 @@ export default function Homepage() {
     const removeDetail = (listDetail, itemId) => {
         const lists = [...list]
         const noteList = itemdetail.map(el => el.note)
-
+        console.log(lists,noteList);
         const filterDetail = noteList[0].filter(ln => ln.id !== listDetail.id);
+        const listsearchs = [...listSearch];
+        console.log(listsearchs);
+        const filterDetails = noteList[0].filter(ln => ln.id !== listDetail.id);
         console.log(filterDetail);
-
         const newList = lists.map(nl => {
 
             if (nl.id === itemId) {
@@ -81,7 +83,13 @@ export default function Homepage() {
             }
             return nl;
         })
+        const newListSearch = listsearchs.map(nl => {
 
+            if (nl.id === itemId) {
+                return { ...nl, note: filterDetails }
+            }
+            return nl;
+        })
         const newDetail = itemdetail.map(el => {
             if (el.id === itemId) {
                 return { ...el, note: filterDetail }
@@ -90,6 +98,7 @@ export default function Homepage() {
         })
         setItemDetail(newDetail);
         setList(newList)
+        setListSearch(newListSearch)
 
     }
 
@@ -108,7 +117,7 @@ export default function Homepage() {
     //     console.log(idNote);
     //     const newDetail = newnote.map(el => {
     //         if(el[0].id === ids){
-    //             return {...el[0], arraylist: listFilter}
+    //             return {...el[0], arraylist: listFilter k}.
     //         }
     //         return el[0];
 
@@ -181,7 +190,6 @@ export default function Homepage() {
                                     </Col>
 
                                     <Button className="" onClick={() => handleAddItem(items.note)} type="button">Add Item</Button>
-
                                 </Form>
                             </div>
                             <div className="w-100">

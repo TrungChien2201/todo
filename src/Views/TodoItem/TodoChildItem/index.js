@@ -42,8 +42,6 @@ export default function TodoChildItem({ listnote }) {
     return (
         <div>
             {listnotes ? listnotes.map((itemnote, indexnote) => (
-
-
                 <div key={indexnote}>
                     {itemnote.arraylist ? itemnote.arraylist.map((itemnotechild, indexnotechild) => (
                         <div className="d-flex" key={indexnotechild}>
@@ -69,8 +67,6 @@ export default function TodoChildItem({ listnote }) {
                         </Form>) : ("")}
                 </div>
             )) : ''}
-
         </div>
-
     )
-}
+}                    
