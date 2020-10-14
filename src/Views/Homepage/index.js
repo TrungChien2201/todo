@@ -19,7 +19,7 @@ const Homepage = () => {
         setIsSearch('')
        }
     }
-    console.log(list);
+
     const handleSearch = (e) => {
         e.preventDefault();
         setIsSearch(true)
