@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, FormControl } from 'react-bootstrap';
 import '../TodoChildItem/style.scss';
 import { v4 as uuidv4 } from 'uuid';
-export default function TodoChildItem({ listnote , handleRemoveChildetail}) {
+const TodoChildItem = ({ listnote , handleRemoveChildetail})=> {
     const [additemchild, setAdditemchild] = useState('');
     const [listnotes, setListnotes] = useState()
     const [isForm, setIsForm] = useState(false);
@@ -76,3 +76,4 @@ export default function TodoChildItem({ listnote , handleRemoveChildetail}) {
         </div>
     )
 }                    
+export default React.memo(TodoChildItem);

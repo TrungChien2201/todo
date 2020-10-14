@@ -4,7 +4,7 @@ import '../Homepage/style.scss';
 import { v4 as uuidv4 } from 'uuid';
 import TodoChildItem from '../TodoItem/TodoChildItem';
 import Fuse from 'fuse.js'
-export default function Homepage() {
+const Homepage = () => {
     const [list, setList] = useState();
     const [listSearch, setListSearch] = useState([]);
     const [keysearch, setKeysearch] = useState('');
@@ -12,7 +12,7 @@ export default function Homepage() {
     const [additemdetail, setAdditemDetail] = useState('');
     const [itemdetail, setItemDetail] = useState();
     const [isSearch,setIsSearch] = useState('')
-
+   console.log(list);
     const handleChange= (e) => {
         setKeysearch(e)
        if(e === ''){
@@ -124,6 +124,8 @@ export default function Homepage() {
         setList(newList)
         setListSearch(newList)
      }
+     
+     
     return (
         <div className="homepage">
 
@@ -209,4 +211,4 @@ export default function Homepage() {
     )
 }
 
-
+export default React.memo(Homepage) 
