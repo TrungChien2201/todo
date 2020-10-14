@@ -23,10 +23,7 @@ export default function Homepage() {
     const handleSearch = (e) => {
         e.preventDefault();
         setIsSearch(true)
-        console.log(listSearch);
-    
         if (keysearch !== '' && listSearch!=='') {
-            console.log(keysearch);
             setIsSearch(true)
             const options = {
                 includeScore: true,
@@ -70,12 +67,9 @@ export default function Homepage() {
     const removeDetail = (listDetail, itemId) => {
         const lists = [...list]
         const noteList = itemdetail.map(el => el.note)
-        console.log(lists,noteList);
         const filterDetail = noteList[0].filter(ln => ln.id !== listDetail.id);
         const listsearchs = [...listSearch];
-        console.log(listsearchs);
         const filterDetails = noteList[0].filter(ln => ln.id !== listDetail.id);
-        console.log(filterDetail);
         const newList = lists.map(nl => {
 
             if (nl.id === itemId) {
@@ -109,30 +103,27 @@ export default function Homepage() {
         }
     }
 
-    //  const handleRemoveChildetail = (listFilter,ids) => {
-    //     console.log(listFilter);
-    //     console.log(ids);
-    //     const newnote = itemdetail.map(el => el.note);
-    //     const idNote = localStorage.getItem('id');
-    //     console.log(idNote);
-    //     const newDetail = newnote.map(el => {
-    //         if(el[0].id === ids){
-    //             return {...el[0], arraylist: listFilter k}.
-    //         }
-    //         return el[0];
+     const handleRemoveChildetail = (listFilter,ids) => {
+        const lists = [...list]
+        const newnote = lists.map(el => el.note);
+        const newArraylist = listFilter.map(nl=> nl.arraylist)
+        const idNote = localStorage.getItem('id');
+        const newDetail = newnote[0].map(el => {
+            if(el.id === ids){
+                return {...el, arraylist: newArraylist[0] }
+            }
+            return el;
 
-    //     })
-    //     const newNote = itemdetail.map(el => {
-    //         if(el.id === idNote){
-    //             return {
-    //                 ...el, note: newDetail
-    //             }
-    //         }
-    //         return el;
-    //     })
-    //     console.log(newDetail);
-    //     setItemDetail(newNote)
-    //  }
+        })
+        const newList = list.map(el => {
+            if(el.id === idNote){
+                return {...el, note: newDetail}
+            }
+            return el;
+        })
+        setList(newList)
+        setListSearch(newList)
+     }
     return (
         <div className="homepage">
 
@@ -204,7 +195,7 @@ export default function Homepage() {
                                         {/* {itemdetail ? itemdetail.map((itemchild, indexchild) => (
                                             <div className="item-detail w-50" key={indexchild}>{itemchild.valuechilds}</div>
                                         )) : ''} */}
-                                        <TodoChildItem listnote={itemdetail} />
+                                        <TodoChildItem listnote={itemdetail} handleRemoveChildetail={handleRemoveChildetail}/>
                                     </div>
                                 )) : ''}
 

@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, FormControl } from 'react-bootstrap';
 import '../TodoChildItem/style.scss';
 import { v4 as uuidv4 } from 'uuid';
-export default function TodoChildItem({ listnote }) {
+export default function TodoChildItem({ listnote , handleRemoveChildetail}) {
     const [additemchild, setAdditemchild] = useState('');
-    const [listnotes, setListnotes] = useState([listnote])
+    const [listnotes, setListnotes] = useState()
     const [isForm, setIsForm] = useState(false);
+    useEffect(() => {
+        setListnotes([listnote])
+    }, [listnote])
+    // useEffect(()=> {
+    //     setListnotes(listnotes)
+    // },[listnotes])
     const handleAddItemchilds = (ids) => {
         const listchild = listnotes.map(el => el.arraylist);
         if (additemchild) {
@@ -20,7 +26,6 @@ export default function TodoChildItem({ listnote }) {
             setListnotes(newlistchild);
             setAdditemchild('');
         }
-
     }
     const OpenFormaddChild = () => {
         setIsForm(true)
@@ -38,6 +43,7 @@ export default function TodoChildItem({ listnote }) {
             return el;
         })
         setListnotes(newlistchild)
+        handleRemoveChildetail(newlistchild,listnote.id)
     }
     return (
         <div>
