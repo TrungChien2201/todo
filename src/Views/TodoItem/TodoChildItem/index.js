@@ -33,18 +33,7 @@ const TodoChildItem = ({ listnote , handleRemoveChildetail})=> {
     const CloseFormaddChild = () => {
         setIsForm(false)
     }
-    const removeChildDetail = (ids, noteId) => {
-        const listchild = listnotes.map(el => el.arraylist);
-        const filterchild = listchild[0].filter(el => el.id !== ids);
-        const newlistchild = listnotes.map(el => {
-            if (el.id === noteId) {
-                return { ...el, arraylist: filterchild }
-            }
-            return el;
-        })
-        setListnotes(newlistchild)
-        handleRemoveChildetail(newlistchild,listnote.id)
-    }
+    
     return (
         <div>
             {listnotes ? listnotes.map((itemnote, indexnote) => (
@@ -54,7 +43,6 @@ const TodoChildItem = ({ listnote , handleRemoveChildetail})=> {
                             <div className="w-50 item-detail">
                                 {itemnotechild.titlechild}
                             </div>
-                            <button type="button" onClick={() => removeChildDetail(itemnotechild.id, itemnote.id)} className="ml-3 pt-4 btn-close"><i className="fas fa-times-circle"></i></button>
                         </div>
                     )) : ''}
 

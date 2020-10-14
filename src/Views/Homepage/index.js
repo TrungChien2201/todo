@@ -12,7 +12,6 @@ const Homepage = () => {
     const [additemdetail, setAdditemDetail] = useState('');
     const [itemdetail, setItemDetail] = useState();
     const [isSearch,setIsSearch] = useState('')
-   console.log(list);
     const handleChange= (e) => {
         setKeysearch(e)
        if(e === ''){
@@ -20,6 +19,7 @@ const Homepage = () => {
         setIsSearch('')
        }
     }
+    console.log(list);
     const handleSearch = (e) => {
         e.preventDefault();
         setIsSearch(true)
@@ -103,27 +103,7 @@ const Homepage = () => {
         }
     }
 
-     const handleRemoveChildetail = (listFilter,ids) => {
-        const lists = [...list]
-        const newnote = lists.map(el => el.note);
-        const newArraylist = listFilter.map(nl=> nl.arraylist)
-        const idNote = localStorage.getItem('id');
-        const newDetail = newnote[0].map(el => {
-            if(el.id === ids){
-                return {...el, arraylist: newArraylist[0] }
-            }
-            return el;
-
-        })
-        const newList = list.map(el => {
-            if(el.id === idNote){
-                return {...el, note: newDetail}
-            }
-            return el;
-        })
-        setList(newList)
-        setListSearch(newList)
-     }
+     
      
      
     return (
@@ -197,7 +177,7 @@ const Homepage = () => {
                                         {/* {itemdetail ? itemdetail.map((itemchild, indexchild) => (
                                             <div className="item-detail w-50" key={indexchild}>{itemchild.valuechilds}</div>
                                         )) : ''} */}
-                                        <TodoChildItem listnote={itemdetail} handleRemoveChildetail={handleRemoveChildetail}/>
+                                        <TodoChildItem listnote={itemdetail} />
                                     </div>
                                 )) : ''}
 
